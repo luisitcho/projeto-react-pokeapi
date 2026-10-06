@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    /* Usando os hexadecimais exatos que estavam na template original do Vite */
+    @apply bg-[#fff] text-[#6b6375] dark:bg-[#16171d] dark:text-[#9ca3af] antialiased;
+    font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
