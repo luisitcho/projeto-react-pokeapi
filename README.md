@@ -1,74 +1,71 @@
-# PokéAPI - React & Vite
+# PokéAPI Consumer Application
 
-Este é um projeto desenvolvido em **React** com **TypeScript** e **Vite**, focado em consumir e exibir dados da [PokéAPI](https://pokeapi.co/).
+## Visão Geral
+Este repositório contém uma aplicação frontend desenvolvida para consumir e apresentar dados da [PokéAPI](https://pokeapi.co/) pública. O projeto foi estruturado como uma *Single-Page Application* (SPA) moderna, com foco em performance, modularidade e manutenibilidade.
 
-## 🚀 Tecnologias Utilizadas
+## Arquitetura e Tecnologias
+O projeto utiliza a seguinte pilha tecnológica:
+- **React**: Biblioteca para construção de interfaces baseadas em componentes.
+- **TypeScript**: Superconjunto sintático de JavaScript que adiciona tipagem estática.
+- **Vite**: Ferramenta de *build* de nova geração para desenvolvimento ágil e empacotamento otimizado.
+- **Tailwind CSS (v4)**: *Framework* CSS utilitário para estilização de interface.
 
-- [React](https://reactjs.org/) - Biblioteca para construção de interfaces.
-- [TypeScript](https://www.typescriptlang.org/) - Tipagem estática para JavaScript.
-- [Vite](https://vitejs.dev/) - Ferramenta de build super rápida e servidor de desenvolvimento.
+## Pré-requisitos
+Certifique-se de que as seguintes dependências estão instaladas no ambiente antes de prosseguir:
+- Node.js (versão 18.x ou superior recomendada)
+- npm (*Node Package Manager*)
 
-## 📋 Pré-requisitos
+## Configuração de Ambiente
+A aplicação depende de variáveis de ambiente para a definição de *endpoints* de API, garantindo flexibilidade nos *deployments*.
 
-Certifique-se de ter as seguintes ferramentas instaladas em seu sistema antes de prosseguir:
-
-- [Node.js](https://nodejs.org/) (recomendado versão 18 ou superior)
-- [npm](https://www.npmjs.com/) (gerenciador de pacotes padrão do Node)
-
-## ⚙️ Configuração das Variáveis de Ambiente
-
-Para que o projeto consiga realizar as requisições para a API corretamente, é necessário configurar a URL base da PokeAPI. 
-
-No diretório raiz do projeto, crie ou edite o arquivo `.env` com a seguinte variável:
+Crie um arquivo `.env` na raiz do projeto e defina as seguintes variáveis:
 
 ```env
 VITE_POKEAPI_BASE_URL=https://pokeapi.co/api/v2/
 ```
 
-> **Aviso:** Como estamos utilizando o Vite, é obrigatório que as variáveis de ambiente comecem com o prefixo `VITE_` para que elas sejam injetadas de forma segura e acessíveis no código do navegador (`client-side`). Caso contrário, elas retornarão `undefined`.
+**Nota de Segurança**: Variáveis de ambiente destinadas ao código *client-side* devem obrigatoriamente possuir o prefixo `VITE_`. Variáveis sem este prefixo não serão expostas no *bundle* final.
 
-## 📦 Instalação e Execução
+## Inicialização
 
-1. Clone o repositório ou acesse o diretório principal do projeto onde o arquivo `package.json` está localizado.
-2. Instale as dependências executando:
-
+1. Clone o repositório e navegue até o diretório do projeto.
+2. Instale as dependências:
    ```bash
    npm install
    ```
-
-3. Inicie o servidor de desenvolvimento:
-
+3. Inicie o servidor local de desenvolvimento:
    ```bash
    npm run dev
    ```
+4. Acesse a aplicação através da URL fornecida na saída do terminal (geralmente `http://localhost:5173/`).
 
-4. O terminal exibirá uma URL local (geralmente `http://localhost:5173/`). Abra-a no seu navegador para ver a aplicação rodando!
+## Exemplo de Integração
+Para utilizar as variáveis de ambiente dentro da aplicação React, referencie `import.meta.env`. Abaixo segue uma implementação padrão para o consumo da API:
 
-## 💡 Como Consumir a API no Código
-
-Para acessar a variável de ambiente dentro dos componentes React, basta usar a sintaxe `import.meta.env`:
-
-```tsx
+```typescript
 const baseUrl = import.meta.env.VITE_POKEAPI_BASE_URL;
 
-// Exemplo buscando os dados do Pikachu
 fetch(`${baseUrl}pokemon/pikachu`)
-  .then(response => response.json())
-  .then(data => console.log(data));
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Erro na requisição! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => console.log('Dados recebidos com sucesso:', data))
+  .catch(error => console.error('Falha ao obter dados:', error));
 ```
 
-## 📁 Estrutura Base do Projeto
-
-Abaixo, a organização simplificada dos arquivos:
-
+## Estrutura do Projeto
 ```text
-├── src/               # Código-fonte principal da aplicação
-│   ├── assets/        # Imagens, SVGs e afins
+├── src/
+│   ├── assets/        # Arquivos estáticos (imagens, ícones)
+│   ├── routes/        # Lógica de roteamento da aplicação
 │   ├── App.tsx        # Componente raiz
-│   └── main.tsx       # Ponto de entrada do React
-├── public/            # Arquivos estáticos (favicon, etc)
-├── .env               # Variáveis de ambiente
-├── index.html         # Template HTML principal
-├── package.json       # Dependências e scripts do projeto
-└── vite.config.ts     # Configurações do Vite
+│   ├── index.css      # Folha de estilos global e diretivas do Tailwind
+│   └── main.tsx       # Ponto de entrada da aplicação
+├── public/            # Arquivos servidos publicamente
+├── .env               # Configuração de ambiente
+├── package.json       # Metadados e dependências do projeto
+└── vite.config.ts     # Configuração do empacotador (Vite)
 ```
