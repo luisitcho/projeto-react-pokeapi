@@ -21,7 +21,7 @@ A aplicação depende de variáveis de ambiente para a definição de *endpoints
 Crie um arquivo `.env` na raiz do projeto e defina as seguintes variáveis:
 
 ```env
-VITE_POKEAPI_BASE_URL=https://pokeapi.co/api/v2/
+VITE_API_BASE_URL=https://pokeapi.co/api/v2/
 ```
 
 **Nota de Segurança**: Variáveis de ambiente destinadas ao código *client-side* devem obrigatoriamente possuir o prefixo `VITE_`. Variáveis sem este prefixo não serão expostas no *bundle* final.
@@ -43,7 +43,7 @@ VITE_POKEAPI_BASE_URL=https://pokeapi.co/api/v2/
 Para utilizar as variáveis de ambiente dentro da aplicação React, referencie `import.meta.env`. Abaixo segue uma implementação padrão para o consumo da API:
 
 ```typescript
-const baseUrl = import.meta.env.VITE_POKEAPI_BASE_URL;
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 fetch(`${baseUrl}pokemon/pikachu`)
   .then(response => {

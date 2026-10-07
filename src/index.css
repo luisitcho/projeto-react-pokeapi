@@ -1,10 +1,16 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
-  body {
-    /* Usando os hexadecimais exatos que estavam na template original do Vite */
-    @apply bg-[#fff] text-[#6b6375] dark:bg-[#16171d] dark:text-[#9ca3af] antialiased;
-    font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-  }
+    body {
+        /* Usando os hexadecimais exatos que estavam na template original do Vite */
+        @apply bg-[#fff] text-[#6b6375] antialiased dark:bg-[#16171d] dark:text-[#9ca3af];
+        font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+    }
 }
 
+@layer components {
+    /* Substitui/Cria o container igualzinho ao do Bootstrap */
+    .container {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+}

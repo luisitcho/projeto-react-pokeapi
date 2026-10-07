@@ -1,12 +1,16 @@
-import './App.css'
+import './App.css';
+import AppRoutes from './routes/AppRoutes';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
 
-function App() {
-  
-  return (
-    <>
-
-    </>
-  )
+export default function App() {
+    return (
+        <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1 pt-24">
+                <AppRoutes />
+            </main>
+            <Footer />
+        </div>
+    );
 }
-
-export default App
